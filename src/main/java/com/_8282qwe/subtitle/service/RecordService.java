@@ -23,7 +23,7 @@ public class RecordService {
 
         LivekitEgress.EncodedFileOutput output = LivekitEgress.EncodedFileOutput.newBuilder()
                 .setFileType(LivekitEgress.EncodedFileType.MP4)
-                .setFilepath(roomName + LocalDateTime.now())
+                .setFilepath(roomName +"/"+ LocalDateTime.now())
                 .setS3(
                         LivekitEgress.S3Upload.newBuilder()
                                 .setAccessKey("minioadmin")
@@ -35,10 +35,9 @@ public class RecordService {
                 .build();
 
         EgressServiceClient egressClient = EgressServiceClient.createClient("https://openvidu.midichi.kro.kr", LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
-        Call<LivekitEgress.EgressInfo> call = egressClient.startWebEgress(
-                "https://reacticeout.icebuckwheat.kro.kr/liveroom/"+roomName+"/"+roomName,
+        Call<LivekitEgress.EgressInfo> call = egressClient.startRoomCompositeEgress(
+                roomName,
                 output);
-
         try {
             LivekitEgress.EgressInfo egressInfo = call.execute().body();
             System.out.println(egressInfo);

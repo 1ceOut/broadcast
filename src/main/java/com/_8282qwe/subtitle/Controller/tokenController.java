@@ -1,6 +1,5 @@
 package com._8282qwe.subtitle.Controller;
 
-import com._8282qwe.subtitle.service.RecordService;
 import io.livekit.server.AccessToken;
 import io.livekit.server.RoomJoin;
 import io.livekit.server.RoomName;
@@ -18,7 +17,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class tokenController {
-    private final RecordService recordService;
+    //private final RecordService recordService;
 
     @Value("${livekit.api.key}")
     private String LIVEKIT_API_KEY;
@@ -43,7 +42,7 @@ public class tokenController {
         token.setIdentity(participantName);
         token.addGrants(new RoomJoin(true), new RoomName(roomName));
 
-        recordService.recordStart(roomName);
+        //recordService.recordStart(roomName);
         return ResponseEntity.ok(Map.of("accessToken", token.toJwt()));
     }
 
